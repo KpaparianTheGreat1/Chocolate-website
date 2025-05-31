@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover our premium chocolate selection - Chocolate Paradise">
+    <title>Our Chocolates | Chocolate Paradise</title>
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous">
+    
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- CSS Links -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --accent-color: #D7CCC8;
+            --light-color: #EFEBE9;
+            --dark-color: #3E2723;
+            --text-dark: #212121;
+            --text-light: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--light-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+         /* Navigation */
+         .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: background-color 0.3s ease;
+        }
+    
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+    
+        .nav-link {
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            color: var(--accent-color);
+            background-color: transparent;
+            border: 2px solid transparent;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            margin: 0.25rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 300%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            transform: translateX(-50%) scaleX(0);
+            z-index: 0;
+        }
+    
+        .nav-link:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+    
+        .nav-link:hover {
+            color: white;
+            border-color: var(--accent-color);
+        }
+    
+        .nav-link.active {
+            background-color: #5D4037;
+            color: white;
+        }
+    
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .nav-link {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    
+        
+        /* Main Content */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        /* Product Cards */
+        .product-card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    height: 100%;
+    background-color: white;
+    position: relative; /* For glitter effect positioning */
+    animation: pulse 1.5s infinite alternate;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.product-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.product-inner {
+        position: relative;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+
+    .product-card:hover .product-inner {
+        transform: rotateY(10deg) scale(1.02);
+    }
+
+.product-img {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+    background-color: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+.product-img:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: scale(1.1);
+}
+
+/* Glitter effect */
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('path/to/glitter.png') repeat;
+    opacity: 0.2;
+    pointer-events: none;
+    animation: glitter 1.5s infinite linear;
+}
+
+.product-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, 
+            rgba(255,255,255,0.15) 0%,
+            rgba(255,255,255,0.05) 50%,
+            rgba(255,255,255,0.15) 100%);
+        pointer-events: none;
+    }
+
+.product-price {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-price {
+        transform: scale(1.1);
+    }
+
+.btn-chocolate {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-chocolate:hover {
+    background-color: var(--dark-color);
+}
+
+/* Keyframe animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.09);
+    }
+}
+
+@keyframes glitter {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+        /* Cart Items */
+        .cart-item img {
+            height: 150px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-control input {
+            width: 60px;
+            text-align: center;
+        }
+        
+        /* Filter Controls */
+        .filter-controls {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            transition: background-color 0.3s ease;
+        }
+        
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+        
+        /* Cart Badge */
+        .cart-badge {
+            transition: all 0.3s ease;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+         /* Nutritional badges */
+    .badge-vegan { background: #4CAF50; }
+    .badge-gluten { background: #FF9800; }
+    .badge-organic { background: #8BC34A; }
+
+    /* Rating stars */
+    .rating-stars {
+        color: #FFC107;
+        font-size: 0.9rem;
+    }
+
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .product-card {
+                margin-bottom: 1.5rem;
+            }
+            
+            .filter-controls {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-card {
+                margin-bottom: 1rem;
+            }
+            
+            .filter-controls {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Add skeleton loading */
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% { background-color: hsl(200, 20%, 80%); }
+    100% { background-color: hsl(200, 20%, 95%); }
+}
+
+.skeleton-text {
+    width: 100%;
+    height: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-cup-hot-fill me-2"></i>
+                Chocolate Paradise
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-house-door me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wallet.html">
+                            <i class="bi bi-wallet"></i>Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="product.html">
+                            <i class="bi bi-box"></i>Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="bi bi-cart4"></i>Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="checkout.html">
+                            <i class="bi bi-credit-card"></i>Checkout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="receipt.html">
+                            <i class="bi bi-receipt"></i>Receipt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="bi bi-cart4"></i>
+                            <span class="badge bg-light text-dark ms-1 cart-badge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="storage.html">
+                            <i class="bi bi-boxes me-2"></i>Inventory
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <h1 class="section-title">Our Chocolate Collection</h1>
+            
+            <!-- Filter Controls -->
+            <div class="filter-controls mb-5">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search chocolates...">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="dark">Dark Chocolate</option>
+                            <option value="milk">Milk Chocolate</option>
+                            <option value="white">White Chocolate</option>
+                            <option value="gift">Gift Boxes</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="priceFilter">
+                            <option value="">All Prices</option>
+                            <option value="0-10">Under £10</option>
+                            <option value="10-20">£10 - £20</option>
+                            <option value="20-">Over £20</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Products Grid -->
+            <div class="row" id="productGrid">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="quickViewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body row">
+                <div class="col-md-6">
+                    <img id="modalImage" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-6">
+                    <h3 id="modalTitle"></h3>
+                    <div id="modalRating"></div>
+                    <p id="modalDescription"></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 id="modalPrice"></h4>
+                        <button class="btn btn-chocolate">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3">
+                        <i class="bi bi-cup-hot-fill me-2"></i> Chocolate Paradise
+                    </h4>
+                    <p>Crafting exceptional chocolates since 2010. Made with love and the finest ingredients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook">facebook</i></a>
+                        <a href="#"><i class="bi bi-instagram">instagram</i></a>
+                        <a href="#"><i class="bi bi-twitter">twitter</i></a>
+                        <a href="#"><i class="bi bi-pinterest">pinterest</i></a>
+                    </div>
+                </div>
+                
+               
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 Chocolate Paradise. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   <!-- Add this toast container for notifications -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">System Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>
+</div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Constants
+            const CART_KEY = 'chocolateCart';
+            const INVENTORY_KEY = 'productInventory';
+            const PRODUCTS_KEY = 'productData';
+            const TAX_RATE = 0.10;
+            const SHIPPING_COST = 5.00;
+        
+            // Initialize components
+            if (document.getElementById('productGrid')) initProductPage();
+            updateCartBadge();
+        
+            // ==================== PRODUCT PAGE ====================
+            function initProductPage() {
+                const productGrid = document.getElementById('productGrid');
+                const searchInput = document.getElementById('searchInput');
+                const categoryFilter = document.getElementById('categoryFilter');
+                const priceFilter = document.getElementById('priceFilter');
+                
+                let products = loadProducts();
+                let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        
+                // Event Listeners
+                searchInput.addEventListener('input', debounce(filterProducts, 300));
+                categoryFilter.addEventListener('change', filterProducts);
+                priceFilter.addEventListener('change', filterProducts);
+        
+                // Initial render
+                renderProducts(products);
+        
+                function loadProducts() {
+                    // Load inventory data
+                    const inventory = JSON.parse(localStorage.getItem(INVENTORY_KEY)) || [];
+                    
+                    // Merge demo products with inventory data
+                    const mergedProducts = getDemoProducts().map(product => {
+                        const inventoryItem = inventory.find(item => item.id === product.id);
+                        return {
+                            ...product,
+                            quantity: inventoryItem ? inventoryItem.quantity : product.quantity
+                        };
+                    });
+        
+                    // Save merged data
+                    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(mergedProducts));
+                    return mergedProducts;
+                }
+        
+                function renderProducts(productsToRender) {
+                    productGrid.innerHTML = productsToRender.map(product => `
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card h-100 product-card">
+                                <img src="${product.image}" class="card-img-top product-img" 
+                                     alt="${product.name}" onerror="this.onerror=null;
+                                     this.src='https://source.unsplash.com/random/300x300/?chocolate'">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="h5 product-price">£${product.price.toFixed(2)}</span>
+                                        <button class="btn btn-chocolate btn-sm add-to-cart" 
+                                            data-id="${product.id}"
+                                            ${product.quantity <= 0 ? 'disabled' : ''}>
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        Stock: ${product.quantity}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+        
+                    // Add event listeners to new buttons
+                    document.querySelectorAll('.add-to-cart').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const productId = parseInt(btn.dataset.id);
+                            addToCart(productId);
+                        });
+                    });
+                }
+        
+                function addToCart(productId) {
+                    const product = products.find(p => p.id === productId);
+                    if (!product || product.quantity <= 0) return;
+        
+                    // Update cart
+                    const cartItem = cart.find(item => item.id === productId);
+                    if (cartItem) {
+                        cartItem.quantity++;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: product.name,
+                            price: product.price,
+                            image: product.image,
+                            quantity: 1
+                        });
+                    }
+        
+                    // Update inventory
+                    product.quantity--;
+                    updateInventory(productId, product.quantity);
+        
+                    // Save changes
+                    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+                    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+                    
+                    updateCartBadge();
+                    showToast(`${product.name} added to cart`, 'success');
+                    renderProducts(products);
+                }
+        
+                function updateInventory(productId, newQuantity) {
+                    const inventory = JSON.parse(localStorage.getItem(INVENTORY_KEY)) || [];
+                    const inventoryItem = inventory.find(item => item.id === productId);
+                    
+                    if (inventoryItem) {
+                        inventoryItem.quantity = newQuantity;
+                    } else {
+                        const product = products.find(p => p.id === productId);
+                        inventory.push({
+                            id: productId,
+                            name: product.name,
+                            image: product.image,
+                            quantity: newQuantity
+                        });
+                    }
+                    
+                    localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
+                }
+
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value;
+            const priceRange = priceFilter.value;
+            
+            const filtered = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                       product.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !category || product.category === category;
+                const matchesPrice = checkPriceMatch(product.price, priceRange);
+                
+                return matchesSearch && matchesCategory && matchesPrice;
+            });
+            
+            renderProducts(filtered);
+        }
+
+        function checkPriceMatch(price, priceRange) {
+            if (!priceRange) return true;
+            const [min, max] = priceRange.split('-').map(Number);
+            return max ? price >= min && price <= max : price >= min;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, arguments), wait);
+            };
+        }
+
+        function getDemoProducts() {
+            return [
+                {
+                    id: 1,
+                    name: "Dark Chocolate Truffles",
+                    description: "Rich 70% dark chocolate with a smooth ganache center.",
+                    price: 14.99,
+                    category: "dark",
+                    image: "chocolate1.jpg"
+                },
+                        {
+                            id: 2,
+                            name: "Milk Chocolate Hazelnut",
+                            description: "Creamy milk chocolate with crunchy hazelnut pieces.",
+                            price: 9.99,
+                            category: "milk",
+                            image: "chocolate2.jpg"
+                        },
+                        {
+                            id: 3,
+                            name: "White Chocolate Raspberry",
+                            description: "Sweet white chocolate with tangy raspberry filling.",
+                            price: 12.99,
+                            category: "white",
+                            image: "chocolate3.jpg"
+                        },
+                        {
+                            id: 4,
+                            name: "Dark Chocolate Sea Salt",
+                            description: "Intense dark chocolate with sea salt crystals.",
+                            price: 11.99,
+                            category: "dark",
+                            image: "chocolate4.jpg"
+                        },
+                        {
+                            id: 5,
+                            name: "Milk Chocolate Caramel",
+                            description: "Smooth milk chocolate with gooey caramel center.",
+                            price: 8.99,
+                            category: "milk",
+                            image: "chocolate5.jpg"
+                        },
+                        {
+                            id: 6,
+                            name: "Premium Gift Box",
+                            description: "24-piece assortment of our finest chocolates.",
+                            price: 29.99,
+                            category: "gift",
+                            image: "chocolate6.jpg"
+                        },
+                        {
+                            id: 7,
+                            name: "Dark Chocolate Orange",
+                            description: "Dark chocolate infused with natural orange oil.",
+                            price: 10.99,
+                            category: "dark",
+                            image: "chocolate7.jpg"
+                        },
+                        {
+                            id: 8,
+                            name: "Milk Chocolate Almond",
+                            description: "Creamy milk chocolate with whole roasted almonds.",
+                            price: 9.49,
+                            category: "milk",
+                            image: "chocolate8.jpg"
+                        },
+                        {
+                            id: 9,
+                            name: "White Chocolate Coconut",
+                            description: "White chocolate with shredded coconut flakes.",
+                            price: 11.49,
+                            category: "white",
+                            image: "chocolate9.jpg"
+                        },
+                        {
+                            id: 10,
+                            name: "Dark Chocolate Mint",
+                            description: "Rich dark chocolate with refreshing mint cream.",
+                            price: 12.49,
+                            category: "dark",
+                            image: "chocolate10.jpg"
+                        },
+                        {
+                    id: 11,
+                    name: "Milk Chocolate Peanut Butter",
+                    description: "Milk chocolate with smooth peanut butter filling.",
+                    price: 8.99,
+                    category: "milk",
+                    image: "chocolate11.jpg"
+                },
+                {
+                    id: 12,
+                    name: "White Chocolate Strawberry",
+                    description: "White chocolate with natural strawberry flavor.",
+                    price: 10.99,
+                    category: "white",
+                    image: "chocolate12.jpg"
+                },
+                {
+                    id: 13,
+                    name: "Dark Chocolate Espresso",
+                    description: "Dark chocolate with fine espresso powder.",
+                    price: 13.99,
+                    category: "dark",
+                    image: "chocolate13.jpg"
+                },
+                {
+                    id: 14,
+                    name: "Luxury Gift Box",
+                    description: "36-piece premium chocolate selection in elegant packaging.",
+                    price: 49.99,
+                    category: "gift",
+                    image: "chocolate14.jpg"
+                },
+                {
+                    id: 15,
+                    name: "Dark Chocolate Chili",
+                    description: "Dark chocolate with a hint of chili pepper.",
+                    price: 12.99,
+                    category: "dark",
+                    image: "chocolate15.jpg"
+                },
+                {
+                    id: 16,
+                    name: "Milk Chocolate Cookies & Cream",
+                    description: "Milk chocolate with crunchy cookie bits.",
+                    price: 18.99,
+                    category: "milk",
+                    image: "chocolate16.jpg"
+                },
+
+                {
+                    id: 17,
+                    name: "Milk Chocolate Toffee",
+                    description: "Milk chocolate with crunchy toffee bits.",
+                    price: 9.99,
+                    category: "milk",
+                    image: "chocolate17.jpg"
+                },
+                {
+                    id: 18,
+                    name: "White Chocolate Matcha",
+                    description: "White chocolate infused with matcha green tea.",
+                    price: 11.99,
+                    category: "white",
+                    image: "chocolate18.jpg"
+                },
+                {
+                    id: 19,
+                    name: "Dark Chocolate Ginger",
+                    description: "Dark chocolate with candied ginger pieces.",
+                    price: 10.49,
+                    category: "dark",
+                    image: "chocolate19.jpg"
+                },
+                {
+                    id: 20,
+                    name: "Milk Chocolate Raisins",
+                    description: "Milk chocolate-covered raisins.",
+                    price: 7.99,
+                    category: "milk",
+                    image: "chocolate20.jpg"
+                },
+
+                {
+                    id: 21,
+                    name: "White Chocolate Blueberry",
+                    description: "White chocolate with dried blueberries.",
+                    price: 12.49,
+                    category: "white",
+                    image: "chocolate21.jpg"
+                },
+                {
+                    id: 22,
+                    name: "Dark Chocolate Pecan",
+                    description: "Dark chocolate with roasted pecans.",
+                    price: 13.49,
+                    category: "dark",
+                    image: "chocolate22.jpg"
+                },
+                {
+                    id: 23,
+                    name: "Milk Chocolate Marshmallow",
+                    description: "Milk chocolate with fluffy marshmallow filling.",
+                    price: 8.49,
+                    category: "milk",
+                    image: "chocolate23.jpg"
+                },
+                {
+                    id: 24,
+                    name: "White Chocolate Lemon",
+                    description: "White chocolate with zesty lemon flavor.",
+                    price: 11.99,
+                    category: "white",
+                    image: "chocolate24.jpg"
+                },
+
+                {
+                    id: 25,
+                    name: "Dark Chocolate Raspberry",
+                    description: "Dark chocolate with raspberry filling.",
+                    price: 12.99,
+                    category: "dark",
+                    image: "chocolate25.jpg"
+                },
+                {
+                    id: 26,
+                    name: "Milk Chocolate Cookie Dough",
+                    description: "Milk chocolate with cookie dough pieces.",
+                    price: 9.99,
+                    category: "milk",
+                    image: "chocolate26.jpg"
+                },
+                {
+                    id: 27,
+                    name: "White Chocolate Pistachio",
+                    description: "White chocolate with crushed pistachios.",
+                    price: 13.49,
+                    category: "white",
+                    image: "chocolate27.jpg"
+                },
+                {
+                    id: 28,
+                    name: "Dark Chocolate Almonds",
+                    description: "Dark chocolate-covered almonds.",
+                    price: 10.99,
+                    category: "dark",
+                    image: "chocolate28.jpg"
+                },
+                {
+                    id: 29,
+                    name: "Milk Chocolate Coconut",
+                    description: "Milk chocolate with shredded coconut.",
+                    price: 8.99,
+                    category: "milk",
+                    image: "chocolate29.jpg"
+                },
+                {
+                    id: 30,
+                    name: "White Chocolate Mint",
+                    description: "White chocolate with mint flavor.",
+                    price: 11.49,
+                    category: "white",
+                    image: "chocolate30.jpg"
+                },
+                {
+                    id: 31,
+                    name: "Dark Chocolate Strawberry",
+                    description: "Dark chocolate with strawberry filling.",
+                    price: 12.49,
+                    category: "dark",
+                    image: "chocolate31.jpg"
+                },
+                {
+                    id: 32,
+                    name: "Milk Chocolate Orange",
+                    description: "Milk chocolate with orange flavor.",
+                    price: 9.49,
+                    category: "milk",
+                    image: "chocolate32.jpg"
+                },
+                {
+                    id: 33,
+                    name: "White Chocolate Caramel",
+                    description: "White chocolate with caramel filling.",
+                    price: 10.99,
+                    category: "white",
+                    image: "chocolate33.jpg"
+                },
+
+                {
+                    id: 34,
+                    name: "Dark Chocolate Coffee",
+                    description: "Dark chocolate with coffee flavor.",
+                    price: 13.99,
+                    category: "dark",
+                    image: "chocolate34.jpg"
+                },
+                {
+                    id: 35,
+                    name: "Milk Chocolate Mint",
+                    description: "Milk chocolate with mint flavor.",
+                    price: 8.49,
+                    category: "milk",
+                    image: "chocolate35.jpg"
+                },
+                {
+                    id: 36,
+                    name: "White Chocolate Raspberry",
+                    description: "White chocolate with raspberry filling.",
+                    price: 11.99,
+                    category: "white",
+                    image: "chocolate36.jpg"
+                },
+                {
+                    id: 37,
+                    name: "Dark Chocolate Hazelnut",
+                    description: "Dark chocolate with hazelnut pieces.",
+                    price: 12.99,
+                    category: "dark",
+                    image: "chocolate37.jpg"
+                },
+                {
+                    id: 38,
+                    name: "Milk Chocolate Strawberry",
+                    description: "Milk chocolate with strawberry filling.",
+                    price: 9.99,
+                    category: "milk",
+                    image: "chocolate38.jpg"
+                },
+                {
+                    id: 39,
+                    name: "White Chocolate Blueberry",
+                    description: "White chocolate with blueberry flavor.",
+                    price: 10.49,
+                    category: "white",
+                    image: "chocolate39.jpg"
+                },
+                {
+                    id: 40,
+                    name: "Dark Chocolate Mint",
+                    description: "Dark chocolate with mint flavor.",
+                    price: 13.49,
+                    category: "dark",
+                    image: "chocolate40.jpg"
+                },
+                {
+                    id: 41,
+                    name: "Double Chocolate Cookies.",
+                    description: "Delicious cookies made with rich chocolate dough and chocolate chips.",
+                    price: 5.99,
+                    category: "gift",
+                    image: "chocolate41.jpg"
+                },
+                {
+                    id: 42,
+                    name: "Chewy Chocolate Cookies.",
+                    description: "Soft and chewy cookies with a rich chocolate flavor.",
+                    price: 6.49,
+                    category: "gift",
+                    image: "chocolate42.jpg"
+                },
+                {
+                    id: 43,
+                    name: "Vegan Chocolate Cookies.",
+                    description: "Delicious vegan cookies made with plant-based ingredients and rich chocolate.",
+                    price: 7.99,
+                    category: "gift",
+                    image: "chocolate43.jpg"
+                },
+                {
+                    id: 44,
+                    name: "Gluten-Free Chocolate Cookies.",
+                    description: "Tasty gluten-free cookies made with almond flour and rich chocolate.",
+                    price: 8.49,
+                    category: "gift",
+                    image: "chocolate44.jpg"
+                },
+                {
+                    id: 45,
+                    name: "Organic Chocolate Cookies.",
+                    description: "Organic cookies made with high-quality ingredients and rich chocolate.",
+                    price: 9.99,
+                    category: "gift",
+                    image: "chocolate45.jpg"
+                },
+                {
+                    id: 46,
+                    name: "Chocolate Chip Cookies.",
+                    description: "Classic chocolate chip cookies made with rich chocolate chips.",
+                    price: 4.99,
+                    category: "gift",
+                    image: "chocolate46.jpg"
+                },
+                {
+                    id: 47,
+                    name: "Chocolate Oatmeal Cookies.",
+                    description: "Healthy oatmeal cookies with a rich chocolate flavor.",
+                    price: 5.49,
+                    category: "gift",
+                    image: "chocolate47.jpg"
+                },
+                {
+                    id: 48,
+                    name: "Chocolate Peanut Butter Cookies.",
+                    description: "Delicious cookies made with peanut butter and rich chocolate.",
+                    price: 6.99,
+                    category: "gift",
+                    image: "chocolate48.jpg"
+                },
+                {
+                    id: 49,
+                    name: "Chocolate Coconut Cookies.",
+                    description: "Tasty cookies made with shredded coconut and rich chocolate.",
+                    price: 7.49,
+                    category: "gift",
+                    image: "chocolate49.jpg"
+                },
+                {
+                    id: 50,
+                    name: "Chocolate Almond Cookies.",
+                    description: "Crunchy almond cookies with a rich chocolate flavor.",
+                    price: 8.99,
+                    category: "gift",
+                    image: "chocolate50.jpg"
+                }
+
+                    ];
+                }
+            }
+
+   // ==================== SHARED FUNCTIONS ====================
+   function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelectorAll('.cart-badge').forEach(badge => {
+            badge.textContent = count;
+            badge.style.visibility = count > 0 ? 'visible' : 'hidden';
+        });
+    }
+
+    window.showToast = function(message, type = 'success') {
+                const toastEl = document.getElementById('liveToast');
+                const toastBody = toastEl.querySelector('.toast-body');
+                toastEl.classList.add(`bg-${type}`);
+                toastBody.textContent = message;
+                
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+                
+                setTimeout(() => toastEl.classList.remove(`bg-${type}`), 5000);
+            };
+    
+            window.adjustQuantity = function(id, change) {
+                const itemIndex = inventory.findIndex(p => p.id === id);
+                if(itemIndex === -1) return;
+    
+                const newValue = parseInt(inventory[itemIndex].quantity) + change;
+                if(newValue >= 0) {
+                    inventory[itemIndex].quantity = newValue;
+                    
+                    // Update both inventory and products
+                    const productIndex = products.findIndex(p => p.id === id);
+                    if(productIndex !== -1) {
+                        products[productIndex].quantity = newValue;
+                    }
+                    
+                    localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
+                    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+                    renderInventory();
+                    showToast('Quantity updated successfully');
+                }
+            };
+});
+
+
+
+    </script>
+</body>
+</html>

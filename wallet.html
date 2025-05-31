@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your Chocolate Paradise wallet - Add funds, track transactions, and view spending analytics">
+    <title>Wallet Management | Chocolate Paradise</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #5D4037;
+            --secondary-color: #8D6E63;
+            --accent-color: #D7CCC8;
+            --light-color: #EFEBE9;
+            --dark-color: #3E2723;
+            --text-dark: #212121;
+            --text-light: #f5f5f5;
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --success-color: #4CAF50;
+            --danger-color: #F44336;
+            --info-color: #2196F3;
+            --warning-color: #FFC107;
+        }
+    
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--light-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+    
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+    
+         /* Navigation */
+         .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            transition: background-color 0.3s ease;
+        }
+    
+    
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+    
+        .nav-link {
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            color: var(--accent-color);
+            background-color: transparent;
+            border: 2px solid transparent;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            margin: 0.25rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 300%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            transform: translateX(-50%) scaleX(0);
+            z-index: 0;
+        }
+    
+        .nav-link:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+    
+        .nav-link:hover {
+            color: white;
+            border-color: var(--accent-color);
+        }
+    
+        .nav-link.active {
+            background-color: #5D4037;
+            color: white;
+        }
+    
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .nav-link {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    
+        /* Main Content */
+        .section {
+            padding: 3rem 0;
+        }
+    
+        .section-title {
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+    
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+    
+        /* Wallet Cards */
+        .wallet-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            background-color: white;
+        }
+    
+        .wallet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+    
+        .wallet-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+    
+        .wallet-card-body {
+            padding: 1.5rem;
+        }
+    
+        .balance-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 12px;
+        }
+    
+        .balance-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+    
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+    
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--dark-color);
+            border-color: var(--dark-color);
+            transform: translateY(-2px);
+        }
+    
+        .quick-add-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+    
+        .quick-add-btn:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+    
+        /* Transactions */
+        .transaction-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+    
+        .transaction-list::-webkit-scrollbar {
+            width: 6px;
+        }
+    
+        .transaction-list::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+    
+        .transaction-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+    
+        .transaction-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+    
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+    
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+    
+        .transaction-income .transaction-icon {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+    
+        .transaction-expense .transaction-icon {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+    
+        .transaction-details {
+            flex-grow: 1;
+        }
+    
+        .transaction-amount {
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+    
+        .transaction-income .transaction-amount {
+            color: var(--success-color);
+        }
+    
+        .transaction-expense .transaction-amount {
+            color: var(--danger-color);
+        }
+    
+        /* Stats Cards */
+        .stats-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+    
+        .stats-card.deposits {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success-color);
+        }
+    
+        .stats-card.purchases {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: var(--danger-color);
+        }
+    
+        .stats-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+    
+        /* Form Controls */
+        .form-control, .form-select {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+    
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(93, 64, 55, 0.25);
+        }
+    
+        .input-group-text {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+        }
+    
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--secondary-color);
+        }
+    
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    
+        /* Chart Container */
+        #spendingChart {
+            max-height: 250px;
+            width: 100% !important;
+            height: auto !important;
+        }
+    
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+    
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-block;
+            margin-right: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+    
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    
+        .social-icons a {
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+    
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+    
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+    
+        /* Toast Notification */
+        .toast {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+    
+        .toast-success {
+            background-color: var(--success-color) !important;
+        }
+    
+        .toast-danger {
+            background-color: var(--danger-color) !important;
+        }
+    
+        .toast-info {
+            background-color: var(--info-color) !important;
+        }
+    
+        .toast-warning {
+            background-color: var(--warning-color) !important;
+        }
+    
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .balance-amount {
+                font-size: 2.5rem;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .section {
+                padding: 2rem 0;
+            }
+    
+            .balance-amount {
+                font-size: 2rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.75rem;
+            }
+    
+            .balance-amount {
+                font-size: 1.75rem;
+            }
+    
+            .stats-value {
+                font-size: 1.5rem;
+            }
+    
+            .transaction-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            .transaction-amount {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+    
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+    
+        .dark-mode .wallet-card {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+    
+        .dark-mode .wallet-card-header {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+    
+        .dark-mode .form-control,
+        .dark-mode .form-select {
+            background-color: #333;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+    
+        .dark-mode .form-control:focus,
+        .dark-mode .form-select:focus {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(93, 64, 55, 0.5);
+        }
+    
+        .dark-mode .input-group-text {
+            background-color: #444;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+    
+        .dark-mode .quick-add-btn {
+            background-color: #333;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+    
+        .dark-mode .transaction-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    
+        .dark-mode .empty-state {
+            color: #999;
+        }
+    
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    
+        @keyframes slideInUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    
+        .animate-slide-up {
+            animation: slideInUp 0.5s ease forwards;
+        }
+    
+        /* Tooltip */
+        .tooltip-inner {
+            background-color: var(--dark-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+    
+        .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before,
+        .bs-tooltip-top .tooltip-arrow::before {
+            border-top-color: var(--dark-color);
+        }
+
+
+         /* Enhanced Styles */
+    .gradient-bg {
+        background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+    }
+
+    .neumorphic-card {
+        background: var(--light-color);
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px var(--shadow-color),
+                   -8px -8px 16px rgba(255, 255, 255, 0.8);
+    }
+
+    .hover-scale {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.03);
+    }
+
+    .dark-mode-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    /* Enhanced Transaction Items */
+    .transaction-item {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .transaction-item::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    }
+
+    /* Improved Form Controls */
+    .form-floating>.form-control:focus~label,
+    .form-floating>.form-control:not(:placeholder-shown)~label {
+        color: var(--primary-color);
+        opacity: 0.8;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+        width: 2rem;
+        height: 2rem;
+        border: 0.25em solid currentColor;
+        border-right-color: transparent;
+        animation: spinner 0.75s linear infinite;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    @keyframes spinner {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Media Queries for Ultra-Responsiveness */
+    @media (max-width: 400px) {
+        .balance-amount {
+            font-size: 1.5rem;
+        }
+        
+        .stats-value {
+            font-size: 1.2rem;
+        }
+        
+        .nav-link {
+            padding: 0.5rem;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Enhanced Chart Container */
+    .chart-container {
+        position: relative;
+        min-height: 300px;
+    }
+
+
+
+    </style>
+</head>
+<body>
+     <!-- Navigation -->
+     <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-cup-hot-fill me-2"></i>
+                CHOCOLATE PARADISE
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-house-door me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="wallet.html">
+                            <i class="bi bi-wallet"></i>Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="product.html">
+                            <i class="bi bi-box"></i>Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="bi bi-cart4"></i>Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="checkout.html">
+                            <i class="bi bi-credit-card"></i>Checkout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="receipt.html">
+                            <i class="bi bi-receipt"></i>Receipt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="bi bi-cart4"></i>
+                            <span class="badge bg-light text-dark ms-1 cart-badge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="storage.html">
+                            <i class="bi bi-boxes me-2"></i>Inventory
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section">
+        <div class="container">
+            <h1 class="section-title animate-slide-up">Your Chocolate Wallet</h1>
+            
+            <div class="row">
+                <!-- Balance Card -->
+                <div class="col-lg-4 mb-4 animate-fade-in">
+                    <div class="wallet-card balance-display h-100">
+                        <div class="d-flex flex-column h-100">
+                            <h2 class="mb-3">Current Balance</h2>
+                            <div class="balance-amount my-auto">£<span id="balance">0.00</span></div>
+                            <p class="text-light mb-0">Available for chocolate purchases</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="col-lg-8 mb-4">
+                    <div class="row">
+                        <div class="col-md-6 animate-fade-in" style="animation-delay: 0.1s;">
+                            <div class="stats-card deposits h-100">
+                                <i class="bi bi-arrow-down-circle fs-4"></i>
+                                <h3 class="h5 mt-2">Total Deposits</h3>
+                                <div class="stats-value">£<span id="totalDeposits">0.00</span></div>
+                                <small class="text-muted">All time</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 animate-fade-in" style="animation-delay: 0.2s;">
+                            <div class="stats-card purchases h-100">
+                                <i class="bi bi-arrow-up-circle fs-4"></i>
+                                <h3 class="h5 mt-2">Total Purchases</h3>
+                                <div class="stats-value">£<span id="totalPurchases">0.00</span></div>
+                                <small class="text-muted">All time</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+               <!-- Updated Add Funds Section -->
+<div class="col-lg-6 mb-4 animate-fade-in">
+    <div class="wallet-card h-100 neumorphic-card hover-scale">
+        <div class="wallet-card-header">
+            <h2 class="h4 mb-0"><i class="bi bi-lightning-charge me-2"></i>Quick Actions</h2>
+        </div>
+        <div class="wallet-card-body">
+            <div class="row g-3">
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="amount" 
+                               placeholder="Enter amount" min="1" step="1">
+                        <label for="amount">Amount to Add</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-primary w-100" id="addFundsBtn">
+                        <span class="btn-content">Add Funds</span>
+                        <span class="spinner d-none"></span>
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-secondary w-100" id="withdrawBtn">
+                        Withdraw
+                    </button>
+                </div>
+                <div class="col-12">
+                    <div class="d-grid gap-2 d-flex flex-wrap justify-content-center">
+                        <button class="quick-add-btn" data-amount="5">
+                            +£5
+                        </button>
+                        <button class="quick-add-btn" data-amount="10">
+                            +£10
+                        </button>
+                        <button class="quick-add-btn" data-amount="20">
+                            +£20
+                        </button>
+                        <button class="quick-add-btn" data-amount="50">
+                            +£50
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                
+                <!-- Spending Chart -->
+                <div class="col-lg-6 mb-4 animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="wallet-card h-100">
+                        <div class="wallet-card-header">
+                            <h2 class="h4 mb-0"><i class="bi bi-pie-chart me-2"></i>Spending Overview</h2>
+                        </div>
+                        <div class="wallet-card-body">
+                            <canvas id="spendingChart" height="250"></canvas>
+                            <div class="mt-3 text-center text-muted small">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Track your chocolate spending habits
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transactions Card -->
+            <div class="row animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="col-12">
+                    <div class="wallet-card">
+                        <div class="wallet-card-header d-flex flex-wrap justify-content-between align-items-center">
+                            <h2 class="h4 mb-0"><i class="bi bi-clock-history me-2"></i>Transaction History</h2>
+                            <div class="d-flex mt-2 mt-md-0">
+                                <select id="transactionFilter" class="form-select form-select-sm me-2 w-auto">
+                                    <option value="all">All Transactions</option>
+                                    <option value="deposit">Deposits Only</option>
+                                    <option value="purchase">Purchases Only</option>
+                                    <option value="month">This Month</option>
+                                </select>
+                                <button id="exportTransactionsBtn" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-download me-1"></i> Export
+                                </button>
+                                <button id="clearTransactionsBtn" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash me-1"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                        <div class="wallet-card-body p-0">
+                            <div class="transaction-list" id="transactions">
+                                <!-- Empty state -->
+                                <div class="empty-state">
+                                    <i class="bi bi-wallet2 empty-state-icon"></i>
+                                    <h3 class="h5">No transactions yet</h3>
+                                    <p class="text-muted">Add funds to your wallet to get started</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add dark mode toggle button -->
+<div class="dark-mode-toggle">
+    <button class="btn btn-dark btn-sm p-2 rounded-circle shadow" id="darkModeToggle">
+        <i class="bi bi-moon-stars"></i>
+    </button>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3">
+                        <i class="bi bi-cup-hot-fill me-2"></i> Chocolate Paradise
+                    </h4>
+                    <p>Crafting exceptional chocolates since 2010. Made with love and the finest ingredients.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook">facebook</i></a>
+                        <a href="#"><i class="bi bi-instagram">instagram</i></a>
+                        <a href="#"><i class="bi bi-twitter">twitter</i></a>
+                        <a href="#"><i class="bi bi-pinterest">pinterest</i></a>
+                    </div>
+                </div>
+                
+               
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 Chocolate Paradise. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white me-3">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body d-flex align-items-center">
+                <i class="bi me-2" id="toast-icon"></i>
+                <span id="toast-message"></span>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ───── Constants & DOM ─────
+            const WALLET_KEY = 'walletBalance';
+            const TX_KEY = 'walletTransactions';
+            const CART_KEY = 'chocolateCart';
+            const ORDER_KEY = 'currentOrder';
+            
+            // DOM Elements
+            const balanceEl = document.getElementById('balance');
+            const txContainer = document.getElementById('transactions');
+            const addFundsBtn = document.getElementById('addFundsBtn');
+            const amountInput = document.getElementById('amount');
+            const quickAddBtns = document.querySelectorAll('.quick-add-btn');
+            const clearTxBtn = document.getElementById('clearTransactionsBtn');
+            const filterSelect = document.getElementById('transactionFilter');
+            const exportBtn = document.getElementById('exportTransactionsBtn');
+            const cartBadge = document.querySelector('.cart-badge');
+            const totalDepositsEl = document.getElementById('totalDeposits');
+            const totalPurchasesEl = document.getElementById('totalPurchases');
+            const spendingChartCtx = document.getElementById('spendingChart');
+            const toastEl = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            const toast = new bootstrap.Toast(toastEl);
+
+            // ───── State ─────
+            let walletBalance = parseFloat(localStorage.getItem(WALLET_KEY)) || 0;
+            let transactions = JSON.parse(localStorage.getItem(TX_KEY)) || [];
+            let spendingChart = null;
+
+            // ───── Initialize ─────
+            updateBalance();
+            renderTransactions();
+            updateCartBadge();
+            checkForPendingPayments();
+            calculateTotals();
+            initSpendingChart();
+            initTooltips();
+
+            // ───── Event Listeners ─────
+            addFundsBtn.addEventListener('click', addFunds);
+            quickAddBtns.forEach(b => b.addEventListener('click', () => quickAddFunds(+b.dataset.amount)));
+            clearTxBtn.addEventListener('click', clearTransactions);
+            filterSelect.addEventListener('change', renderTransactions);
+            exportBtn.addEventListener('click', exportTransactions);
+            window.addEventListener('storage', syncAcrossTabs);
+
+            // ───── Functions ─────
+
+            // Initialize tooltips
+            function initTooltips() {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            }
+
+            // Update wallet balance display
+            function updateBalance() {
+                balanceEl.textContent = walletBalance.toFixed(2);
+                localStorage.setItem(WALLET_KEY, walletBalance);
+                dispatchStorageEvent(WALLET_KEY, walletBalance);
+            }
+
+            // Add funds to wallet
+            function addFunds() {
+                const amt = parseFloat(amountInput.value);
+                if (isNaN(amt)) {
+                    return showToast('Please enter an amount', 'danger', 'bi-exclamation-triangle');
+                }
+                if (amt <= 0) {
+                    return showToast('Amount must be positive', 'danger', 'bi-exclamation-triangle');
+                }
+                
+                walletBalance += amt;
+                recordTransaction(amt, 'deposit');
+                updateBalance();
+                amountInput.value = '';
+                showToast(`£${amt.toFixed(2)} added to wallet`, 'success', 'bi-check-circle');
+            }
+
+            // Quick add funds with preset amounts
+            function quickAddFunds(amt) {
+                walletBalance += amt;
+                recordTransaction(amt, 'deposit');
+                updateBalance();
+                showToast(`£${amt.toFixed(2)} added to wallet`, 'success', 'bi-check-circle');
+            }
+
+            // Record a new transaction
+            function recordTransaction(amount, type, orderId = null) {
+                const tx = {
+                    id: Date.now(),
+                    amount: parseFloat(amount.toFixed(2)),
+                    type,
+                    date: new Date().toISOString(),
+                    orderId,
+                };
+                transactions.unshift(tx);
+                localStorage.setItem(TX_KEY, JSON.stringify(transactions));
+                dispatchStorageEvent(TX_KEY, JSON.stringify(transactions));
+                renderTransactions();
+                calculateTotals();
+                updateSpendingChart();
+            }
+
+            // Calculate total deposits and purchases
+            function calculateTotals() {
+                const totals = transactions.reduce((acc, tx) => {
+                    if (tx.type === 'deposit') {
+                        acc.deposits += tx.amount;
+                    } else if (tx.type === 'purchase') {
+                        acc.purchases += tx.amount;
+                    }
+                    return acc;
+                }, { deposits: 0, purchases: 0 });
+                
+                totalDepositsEl.textContent = totals.deposits.toFixed(2);
+                totalPurchasesEl.textContent = totals.purchases.toFixed(2);
+            }
+
+            // Render transactions based on current filter
+            function renderTransactions() {
+                const filter = filterSelect.value;
+                let filteredTx = [...transactions];
+                
+                if (filter === 'deposit') {
+                    filteredTx = filteredTx.filter(t => t.type === 'deposit');
+                } else if (filter === 'purchase') {
+                    filteredTx = filteredTx.filter(t => t.type === 'purchase');
+                } else if (filter === 'month') {
+                    const now = new Date();
+                    const thisMonth = now.getMonth();
+                    const thisYear = now.getFullYear();
+                    filteredTx = filteredTx.filter(t => {
+                        const txDate = new Date(t.date);
+                        return txDate.getMonth() === thisMonth && txDate.getFullYear() === thisYear;
+                    });
+                }
+                
+                txContainer.innerHTML = '';
+                
+                if (!filteredTx.length) {
+                    txContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="bi bi-wallet2 empty-state-icon"></i>
+                            <h3 class="h5">No ${filter === 'all' ? '' : filter} transactions</h3>
+                            <p class="text-muted">${filter === 'all' ? 'Add funds to your wallet to get started' : 'No matching transactions found'}</p>
+                        </div>`;
+                    return;
+                }
+                
+                filteredTx.forEach(tx => {
+                    const isDeposit = tx.type === 'deposit';
+                    const txDate = new Date(tx.date);
+                    const dateStr = txDate.toLocaleDateString('en-GB', {
+                        day: '2-digit', 
+                        month: 'short', 
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    const txItem = document.createElement('div');
+                    txItem.className = `transaction-item ${isDeposit ? 'transaction-income' : 'transaction-expense'}`;
+                    txItem.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <div class="transaction-icon">
+                                <i class="bi ${isDeposit ? 'bi-arrow-down-circle' : 'bi-arrow-up-circle'}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <div class="fw-bold">${isDeposit ? 'Wallet Deposit' : 'Chocolate Purchase'}</div>
+                                <small class="text-muted">${dateStr}</small>
+                                ${tx.orderId ? `<small class="d-block text-muted">Order #${tx.orderId}</small>` : ''}
+                            </div>
+                        </div>
+                        <div class="transaction-amount">
+                            ${isDeposit ? '+' : '-'}£${tx.amount.toFixed(2)}
+                        </div>`;
+                    txContainer.appendChild(txItem);
+                });
+            }
+
+            // Check for pending payments from checkout
+            function checkForPendingPayments() {
+                const order = JSON.parse(localStorage.getItem(ORDER_KEY));
+                if (order?.payment?.method === 'wallet' && !order.payment.processed) {
+                    const amt = parseFloat(order.payment.amount);
+                    
+                    if (walletBalance >= amt) {
+                        walletBalance -= amt;
+                        recordTransaction(amt, 'purchase', order.id);
+                        updateBalance();
+                        
+                        // Mark payment as processed
+                        order.payment.processed = true;
+                        localStorage.setItem(ORDER_KEY, JSON.stringify(order));
+                        
+                        showToast(`Payment of £${amt.toFixed(2)} processed`, 'success', 'bi-check-circle');
+                    } else {
+                        showToast('Insufficient funds for pending order', 'danger', 'bi-exclamation-triangle');
+                    }
+                }
+            }
+
+            // Clear all transactions
+            function clearTransactions() {
+                if (!transactions.length) {
+                    return showToast('No transactions to clear', 'info', 'bi-info-circle');
+                }
+                
+                if (!confirm('Are you sure you want to clear all transaction history? This cannot be undone.')) {
+                    return;
+                }
+                
+                transactions = [];
+                localStorage.setItem(TX_KEY, JSON.stringify(transactions));
+                dispatchStorageEvent(TX_KEY, JSON.stringify(transactions));
+                renderTransactions();
+                updateSpendingChart();
+                showToast('Transaction history cleared', 'warning', 'bi-exclamation-triangle');
+            }
+
+            // Export transactions as JSON
+            function exportTransactions() {
+                if (!transactions.length) {
+                    return showToast('No transactions to export', 'info', 'bi-info-circle');
+                }
+                
+                const dataStr = JSON.stringify(transactions, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+                
+                const exportName = `chocolate_wallet_transactions_${new Date().toISOString().split('T')[0]}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportName);
+                linkElement.click();
+                
+                showToast('Transactions exported successfully', 'success', 'bi-check-circle');
+            }
+
+            // Update cart badge count
+            function updateCartBadge() {
+                const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+                const total = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                cartBadge.textContent = total;
+                cartBadge.style.display = total > 0 ? 'inline-block' : 'none';
+            }
+
+            // Show toast notification
+            function showToast(message, type = 'success', icon = '') {
+                toastMessage.textContent = message;
+                
+                // Set toast class and icon based on type
+                const toastClass = `toast-${type}`;
+                const iconClass = icon || 
+                    (type === 'success' ? 'bi-check-circle' :
+                     type === 'danger' ? 'bi-exclamation-triangle' :
+                     type === 'info' ? 'bi-info-circle' : 'bi-exclamation-circle');
+                
+                // Remove all previous classes
+                toastEl.querySelector('.toast-body').className = 'toast-body d-flex align-items-center';
+                toastIcon.className = 'bi';
+                
+                // Add new classes
+                toastEl.querySelector('.toast-body').classList.add(toastClass);
+                toastIcon.classList.add(iconClass);
+                
+                toast.show();
+            }
+
+            // Sync data across tabs
+            function syncAcrossTabs(e) {
+                if (e.key === WALLET_KEY) {
+                    walletBalance = parseFloat(e.newValue) || 0;
+                    updateBalance();
+                }
+                if (e.key === TX_KEY) {
+                    transactions = JSON.parse(e.newValue) || [];
+                    renderTransactions();
+                    calculateTotals();
+                    updateSpendingChart();
+                }
+                if (e.key === CART_KEY) {
+                    updateCartBadge();
+                }
+            }
+
+            // Dispatch storage event
+            function dispatchStorageEvent(key, value) {
+                window.dispatchEvent(new StorageEvent('storage', { key, newValue: value }));
+            }
+
+            // Initialize spending chart
+            function initSpendingChart() {
+                if (spendingChart) {
+                    spendingChart.destroy();
+                }
+
+                // Group transactions by month
+                const monthlyData = {};
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                
+                // Initialize last 6 months
+                for (let i = 5; i >= 0; i--) {
+                    const date = new Date(currentYear, now.getMonth() - i, 1);
+                    const monthKey = date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+                    monthlyData[monthKey] = { deposits: 0, purchases: 0 };
+                }
+                
+                // Process transactions
+                transactions.forEach(tx => {
+                    const txDate = new Date(tx.date);
+                    const monthKey = txDate.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+                    
+                    if (monthlyData[monthKey]) {
+                        if (tx.type === 'deposit') {
+                            monthlyData[monthKey].deposits += tx.amount;
+                        } else if (tx.type === 'purchase') {
+                            monthlyData[monthKey].purchases += tx.amount;
+                        }
+                    }
+                });
+                
+                const labels = Object.keys(monthlyData);
+                const depositData = labels.map(m => monthlyData[m].deposits);
+                const purchaseData = labels.map(m => monthlyData[m].purchases);
+                
+                spendingChart = new Chart(spendingChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Deposits',
+                                data: depositData,
+                                backgroundColor: 'rgba(76, 175, 80, 0.7)',
+                                borderColor: 'rgba(76, 175, 80, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Purchases',
+                                data: purchaseData,
+                                backgroundColor: 'rgba(244, 67, 54, 0.7)',
+                                borderColor: 'rgba(244, 67, 54, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                },
+                                ticks: {
+                                    color: '#666'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#666'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#666'
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: £${context.raw.toFixed(2)}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Update spending chart data
+            function updateSpendingChart() {
+                calculateTotals();
+                initSpendingChart();
+            }
+        });
+
+        // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        darkModeToggle.innerHTML = document.body.classList.contains('dark-mode') 
+            ? '<i class="bi bi-sun"></i>' 
+            : '<i class="bi bi-moon-stars"></i>';
+    }
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
+    // Initialize dark mode
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
+    }
+
+    // Add loading state to buttons
+    function setButtonState(button, isLoading) {
+        button.disabled = isLoading;
+        button.querySelector('.btn-content').classList.toggle('d-none', isLoading);
+        button.querySelector('.spinner').classList.toggle('d-none', !isLoading);
+    }
+
+    // Enhanced add funds function with simulated API call
+    async function addFunds() {
+        const button = addFundsBtn;
+        try {
+            setButtonState(button, true);
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Existing add funds logic
+            // ...
+            
+        } finally {
+            setButtonState(button, false);
+        }
+    }
+
+    // Currency Formatter
+    const formatter = new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+        minimumFractionDigits: 2
+    });
+
+    // Update all currency displays to use formatter
+    function formatCurrencyElements() {
+        document.querySelectorAll('[data-currency]').forEach(el => {
+            el.textContent = formatter.format(parseFloat(el.dataset.currency));
+        });
+    }
+
+    // Enhanced Export Functionality
+    async function exportTransactions(format = 'json') {
+        // ... existing code ...
+        
+        // Add CSV export option
+        if (format === 'csv') {
+            const headers = ['Date', 'Type', 'Amount', 'Order ID'];
+            const csvContent = [
+                headers.join(','),
+                ...transactions.map(tx => [
+                    new Date(tx.date).toISOString(),
+                    tx.type,
+                    tx.amount,
+                    tx.orderId || ''
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            // ... download logic ...
+        }
+    }
+
+    // Initialize Resize Observer for chart
+    const chartObserver = new ResizeObserver(entries => {
+        if (spendingChart) {
+            spendingChart.resize();
+        }
+    });
+    chartObserver.observe(spendingChartCtx.parentElement);
+
+    // Add touch support for mobile
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const deltaX = touchEndX - touchStartX;
+        
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                // Swipe right - previous month
+                adjustChartPeriod(-1);
+            } else {
+                // Swipe left - next month
+                adjustChartPeriod(1);
+            }
+        }
+    });
+
+    // Chart period navigation
+    let currentChartPeriod = 0;
+    function adjustChartPeriod(offset) {
+        currentChartPeriod += offset;
+        updateSpendingChart();
+    }
+
+    </script>
+</body>
+</html>
